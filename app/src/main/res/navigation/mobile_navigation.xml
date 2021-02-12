@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_chats">
+
+    <fragment
+        android:id="@+id/navigation_person"
+        android:name="bsuir.sidorovich.pigeon.ui.person.PersonFragment"
+        android:label="@string/title_person"
+        tools:layout="@layout/fragment_person" />
+
+    <fragment
+        android:id="@+id/navigation_chats"
+        android:name="bsuir.sidorovich.pigeon.ui.chats.ChatsFragment"
+        android:label="@string/title_chats"
+        tools:layout="@layout/fragment_chats" />
+
+    <fragment
+        android:id="@+id/navigation_discussions"
+        android:name="bsuir.sidorovich.pigeon.ui.discussions.DiscussionsFragment"
+        android:label="@string/title_discussions"
+        tools:layout="@layout/fragment_discussions" />
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="bsuir.sidorovich.pigeon.ui.search.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search" />
+</navigation>

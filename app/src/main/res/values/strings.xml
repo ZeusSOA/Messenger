@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Pigeon</string>
+    <string name="title_person">Страница</string>
+    <string name="title_chats">Чаты</string>
+    <string name="title_discussions">Обсуждения</string>
+    <string name="title_search">Поиск</string>
+</resources>
