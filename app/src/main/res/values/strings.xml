@@ -4,4 +4,6 @@
     <string name="title_chats">Чаты</string>
     <string name="title_discussions">Обсуждения</string>
     <string name="title_search">Поиск</string>
+    <string name="login">login</string>
+    <string name="register">register</string>
 </resources>

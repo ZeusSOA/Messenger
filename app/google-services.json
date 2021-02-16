@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "987240910509",
+    "firebase_url": "https://pigeon-2e00a-default-rtdb.firebaseio.com",
+    "project_id": "pigeon-2e00a",
+    "storage_bucket": "pigeon-2e00a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:987240910509:android:c36078f216937b7e840024",
+        "android_client_info": {
+          "package_name": "bsuir.sidorovich.pigeon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "987240910509-j2s8ql29qmriacf6b4i0qp2nau5bnt9g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcruk3dqPk9_zK9uir_J8zc6Y29kxGuAc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "987240910509-j2s8ql29qmriacf6b4i0qp2nau5bnt9g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
