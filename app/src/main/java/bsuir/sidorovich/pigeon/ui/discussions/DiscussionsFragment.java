@@ -13,7 +13,7 @@ import bsuir.sidorovich.pigeon.R;
 public class DiscussionsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_person, container, false);
+        View view = inflater.inflate(R.layout.fragment_discussions, container, false);
 
         return view;
     }

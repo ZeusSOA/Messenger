@@ -7,10 +7,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.internal.InternalTokenProvider;
+
 import bsuir.sidorovich.pigeon.ui.LoginActivity;
 import bsuir.sidorovich.pigeon.ui.RegisterActivity;
 
 public class StartActivity extends AppCompatActivity {
+    protected void onStart() {
+        super.onStart();
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            Intent intent = new Intent(StartActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,4 +48,6 @@ public class StartActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

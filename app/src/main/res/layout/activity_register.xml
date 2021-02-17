@@ -17,22 +17,13 @@
         android:gravity="center_horizontal"
         android:padding="16dp"
         android:layout_below="@id/toolbar">
-        
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Create a new account"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            tools:ignore="HardcodedText" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/username"
-            android:layout_marginTop="10dp"
             app:met_floatingLabel="normal"
-            android:hint="Username"
+            android:hint="Никнейм"
             tools:ignore="HardcodedText" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
@@ -52,17 +43,18 @@
             android:layout_marginTop="10dp"
             app:met_floatingLabel="normal"
             android:inputType="textPassword"
-            android:hint="Password"
+            android:hint="Пароль"
             tools:ignore="HardcodedText" />
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Register"
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:background="@drawable/button_shape"
+            android:text="Зарегистрироваться"
             android:id="@+id/btn_register"
-            android:background="@color/colorPrimaryDark"
-            android:textColor="#FFFFFF"
+            android:textColor="#AAAAAA"
             android:textStyle="bold"
+            android:textSize="18sp"
             android:layout_marginTop="10dp"
             tools:ignore="HardcodedText" />
         
