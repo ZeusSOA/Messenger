@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.discussions.DiscussionsFragment">
+    tools:context=".activities.discussions.DiscussionsFragment">
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

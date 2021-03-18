@@ -1,4 +1,4 @@
-package bsuir.sidorovich.pigeon.ui.person;
+package bsuir.sidorovich.pigeon.activities.person;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 import bsuir.sidorovich.pigeon.R;
-import bsuir.sidorovich.pigeon.StartActivity;
+import bsuir.sidorovich.pigeon.activities.StartActivity;
 
 public class PersonFragment extends Fragment {
 

@@ -1,4 +1,4 @@
-package bsuir.sidorovich.pigeon.ui.model;
+package bsuir.sidorovich.pigeon.model;
 
 public class User {
     private String id;

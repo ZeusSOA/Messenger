@@ -1,4 +1,4 @@
-package bsuir.sidorovich.pigeon.ui;
+package bsuir.sidorovich.pigeon.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -21,7 +21,6 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.Objects;
 
-import bsuir.sidorovich.pigeon.MainActivity;
 import bsuir.sidorovich.pigeon.R;
 
 public class LoginActivity extends AppCompatActivity {
