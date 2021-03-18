@@ -1,4 +1,4 @@
-package bsuir.sidorovich.pigeon.ui;
+package bsuir.sidorovich.pigeon.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -11,12 +11,10 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,7 +25,6 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import java.util.HashMap;
 import java.util.Objects;
 
-import bsuir.sidorovich.pigeon.MainActivity;
 import bsuir.sidorovich.pigeon.R;
 
 public class RegisterActivity extends AppCompatActivity {

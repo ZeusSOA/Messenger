@@ -1,4 +1,4 @@
-package bsuir.sidorovich.pigeon.ui.discussions;
+package bsuir.sidorovich.pigeon.activities.discussions;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

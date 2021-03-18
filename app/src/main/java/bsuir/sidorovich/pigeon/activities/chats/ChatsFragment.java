@@ -1,4 +1,4 @@
-package bsuir.sidorovich.pigeon.ui.chats;
+package bsuir.sidorovich.pigeon.activities.chats;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -19,10 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Objects;
-
 import bsuir.sidorovich.pigeon.R;
-import bsuir.sidorovich.pigeon.ui.model.User;
+import bsuir.sidorovich.pigeon.model.User;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatsFragment extends Fragment {

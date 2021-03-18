@@ -1,4 +1,4 @@
-package bsuir.sidorovich.pigeon;
+package bsuir.sidorovich.pigeon.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,12 +8,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.internal.InternalTokenProvider;
 
-import bsuir.sidorovich.pigeon.ui.LoginActivity;
-import bsuir.sidorovich.pigeon.ui.RegisterActivity;
+import bsuir.sidorovich.pigeon.R;
 
 public class StartActivity extends AppCompatActivity {
     protected void onStart() {

@@ -1,4 +1,4 @@
-package bsuir.sidorovich.pigeon.ui.search;
+package bsuir.sidorovich.pigeon.activities.search;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
