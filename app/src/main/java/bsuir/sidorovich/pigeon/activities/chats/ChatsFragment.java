@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,37 +21,31 @@ public class ChatsFragment extends Fragment {
     //при необходимости при запуске приложения метод getChats() будет загружать список не в ОЗУ, как сейчас, а в БД
     private ArrayList<Chat> chats = getChats();
 
-    private ImageButton searchButton;
-    private ImageButton addButton;
-
-    private RecyclerView chatList;
-
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_chats, container, false);
 
-//        searchButton = view.findViewById(R.id.search_button);
-//        addButton = view.findViewById(R.id.add_button);
-//
-//        searchButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d("tag", "search");
-//
-////                Intent intent = new Intent(getActivity(), TestActivity.class);
-////                startActivity(intent);
-//            }
-//        });
-//        addButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d("tag", "add");
-//            }
-//        });
+        ImageButton searchButton = view.findViewById(R.id.search_button);
+        ImageButton addButton = view.findViewById(R.id.add_button);
 
-        chatList = view.findViewById(R.id.chat_list);
-        chatList.setHasFixedSize(true);
-        chatList.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        chatList.setAdapter(new ChatListAdapter(chats));
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(view.getContext(), "search", Toast.LENGTH_SHORT).show();
+            }
+        });
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(view.getContext(), "add", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // возможно стоит перенести в глобальную область
+        RecyclerView chatsView;
+        chatsView = view.findViewById(R.id.chat_list);
+        chatsView.setHasFixedSize(true);
+        chatsView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        chatsView.setAdapter(new ChatListAdapter(chats, chatsView, this));
 
         return view;
     }
@@ -69,6 +64,7 @@ public class ChatsFragment extends Fragment {
         for (int i = 0; i < 15; i++) {
             Chat chat = new Chat();
             chat.setChatname("chat_" + (i + 1));
+            chat.setId("id" + (i + 1001));
             chats.add(chat);
         }
         return chats;

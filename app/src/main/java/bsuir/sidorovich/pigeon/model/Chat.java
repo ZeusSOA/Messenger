@@ -24,6 +24,10 @@ public class Chat {
         return chatname;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public void setChatname(String chatname) {
         this.chatname = chatname;
     }
