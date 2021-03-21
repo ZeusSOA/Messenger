@@ -1,6 +1,7 @@
 package bsuir.sidorovich.pigeon.activities.chats;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,16 +12,18 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import bsuir.sidorovich.pigeon.R;
 import bsuir.sidorovich.pigeon.activities.ChatActivity;
-import bsuir.sidorovich.pigeon.model.Chat;
+import bsuir.sidorovich.pigeon.model.chat_hierarchy.Chat;
+import bsuir.sidorovich.pigeon.model.chat_hierarchy.GroupChat;
+import bsuir.sidorovich.pigeon.model.chat_hierarchy.SingleChat;
 
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListViewHolder> {
     private ArrayList<Chat> chats;
     private RecyclerView chatsView;
     private Fragment fragment;
+    private int selectedChatIndex;
 
     public ChatListAdapter(
             ArrayList<Chat> chats,
@@ -45,10 +48,33 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListViewHolder> {
             @Override
             public void onClick(View view) {
                 // обработка нажатия https://stackoverflow.com/questions/24471109/recyclerview-onclick
-
+                selectedChatIndex = chatsView.getChildLayoutPosition(view);
                 Intent intent = new Intent(fragment.getActivity(), ChatActivity.class);
-                intent.putExtra("id", chats.get(chatsView.getChildLayoutPosition(view)).getId());
+                intent.putExtra("id", chats.get(selectedChatIndex).getId());
                 fragment.startActivity(intent);
+            }
+        });
+        view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                selectedChatIndex = chatsView.getChildLayoutPosition(view);
+
+                String message = "";
+                if (chats.get(selectedChatIndex) instanceof SingleChat) {
+                    message = "Удалить пользователя из списка чатов?";
+                } else if (chats.get(selectedChatIndex) instanceof GroupChat) {
+                    message = "Выйти из беседы и удалить её из списка чатов?";
+                }
+
+                DeleteDialogFragment dialog = new DeleteDialogFragment();
+                Bundle args = new Bundle();
+                args.putString("chatname", chats.get(selectedChatIndex).getChatname());
+                args.putString("message", message);
+                dialog.setArguments(args);
+                dialog.setTargetFragment(fragment, 1);
+                dialog.show(fragment.getFragmentManager(), "dialog");
+
+                return true;
             }
         });
 
@@ -64,4 +90,13 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListViewHolder> {
     public int getItemCount() {
         return chats.size();
     }
+
+    public void removeSelectedItem() {
+        chats.remove(selectedChatIndex);
+        notifyItemRemoved(selectedChatIndex);
+        notifyItemRangeChanged(selectedChatIndex, chats.size());
+
+        //ServerApi.removeChat
+    }
+
 }

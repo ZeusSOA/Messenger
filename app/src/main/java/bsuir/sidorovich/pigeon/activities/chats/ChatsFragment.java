@@ -1,5 +1,7 @@
 package bsuir.sidorovich.pigeon.activities.chats;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import bsuir.sidorovich.pigeon.R;
-import bsuir.sidorovich.pigeon.model.Chat;
+import bsuir.sidorovich.pigeon.model.chat_hierarchy.Chat;
+import bsuir.sidorovich.pigeon.model.ServerApi;
 
 public class ChatsFragment extends Fragment {
     //при необходимости при запуске приложения метод getChats() будет загружать список не в ОЗУ, как сейчас, а в БД
-    private ArrayList<Chat> chats = getChats();
+    private ArrayList<Chat> chats = ServerApi.getChats();
+    private ChatListAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_chats, container, false);
@@ -45,29 +49,17 @@ public class ChatsFragment extends Fragment {
         chatsView = view.findViewById(R.id.chat_list);
         chatsView.setHasFixedSize(true);
         chatsView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        chatsView.setAdapter(new ChatListAdapter(chats, chatsView, this));
+        adapter = new ChatListAdapter(chats, chatsView, this);
+        chatsView.setAdapter(adapter);
 
         return view;
     }
 
-    //  клиентский метод взаимодействия с сервером (в будущем лучше перенести в отдельный класс)
-    public ArrayList<Chat> getChats() {
-        //отправить свой userID серверу
-        //сервер ищет, в каких чатах состоит userID
-        //сервер возвращает список чатов с chatID
-
-        //ChatView:
-        //название, id чата
-        //фото, последнее сообщение + время, уведомление
-
-        ArrayList<Chat> chats = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
-            Chat chat = new Chat();
-            chat.setChatname("chat_" + (i + 1));
-            chat.setId("id" + (i + 1001));
-            chats.add(chat);
-        }
-        return chats;
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK)
+            adapter.removeSelectedItem();
     }
 }
 

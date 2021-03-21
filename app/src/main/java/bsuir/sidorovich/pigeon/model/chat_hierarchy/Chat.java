@@ -1,20 +1,17 @@
-package bsuir.sidorovich.pigeon.model;
+package bsuir.sidorovich.pigeon.model.chat_hierarchy;
 
 import java.util.ArrayList;
+
+import bsuir.sidorovich.pigeon.model.User;
 
 public class Chat {
     private ArrayList<User> members = new ArrayList<>();
 
-
-
     private String id;
     private String chatname;
-    private String imageUrl;
+    //private String imageUrl;
 
     public Chat() {}
-    public Chat(String id) {
-        this.id = id;
-    }
 
     public String getId() {
         return id;
