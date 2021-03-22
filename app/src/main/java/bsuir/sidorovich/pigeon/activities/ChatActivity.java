@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,20 +45,16 @@ public class ChatActivity extends AppCompatActivity {
         this.adapter = new DialogViewAdapter(this);
         this.historyOfMessages = new HistoryOfMessages();
 
-        Button b = findViewById(R.id.button5);
+        Button sendButton = findViewById(R.id.button5);
 
-        b.setOnClickListener(new View.OnClickListener() {
+        sendButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                System.out.println("da");
-                System.out.println("da");
-                System.out.println("da");
                 sendOneMessage(v);
             }
         });
-
-        setTitle("Dialog");
+        setChangedEditText();
 
         // in
        /* Bundle arguments = getIntent().getExtras();
@@ -76,25 +74,53 @@ public class ChatActivity extends AppCompatActivity {
         //запрос на сервер для получения списка сообщений
     }
 
+    public void setChangedEditText(){
+        @SuppressLint("WrongViewCast") final EditText editText = findViewById(R.id.example_edit_text);
+
+        editText.addTextChangedListener(new TextWatcher(){
+            @Override
+            public void afterTextChanged(Editable s) {
+               /* if(editText.getText().toString().length()>=15){
+                    System.out.println("yes");
+                    editText.setHeight(editText.getHeight()+10);
+                    editText.setText(editText.getText()+"\n");
+                }*/
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
+    }
 
     public void sendOneMessage(View View){
 
-        System.out.println("qqqqq");
-        System.out.println("qqqqq");
-        System.out.println("qqqqq");
-        EditText edit =  (EditText) findViewById(R.id.example_edit_text);
-        historyOfMessages.addOneSendedMessage(new Message(edit.getText().toString(),2,new Date()));
-        edit.clearComposingText();
-        this.adapter.setParams(this,historyOfMessages.getHistoryOfMessagesList());
-        recyclerViewMessages = findViewById(R.id.recyclerView);
-        recyclerViewMessages.setLayoutManager(new LinearLayoutManager(this));
-        recyclerViewMessages.setAdapter(adapter);
-        updateActivity(historyOfMessages.getHistoryOfMessagesList());
+        EditText edit =  findViewById(R.id.example_edit_text);
+
+        if(edit.getText().toString().length()>0) {
+
+            this.historyOfMessages.addOneSendedMessage(new Message(edit.getText().toString(), 1, "Anton Durko", new Date()));
+            edit.getText().clear();
+
+            this.adapter.setParams(this, this.historyOfMessages.getHistoryOfMessagesList());
+
+            this.recyclerViewMessages = findViewById(R.id.recyclerView);
+            this.recyclerViewMessages.setLayoutManager(new LinearLayoutManager(this));
+            this.recyclerViewMessages.setAdapter(adapter);
+
+            updateActivity(historyOfMessages.getHistoryOfMessagesList());
+        }
     }
+
     public void updateActivity(ArrayList<Message> messages){
         this.adapter.setParams(this,messages);
-        recyclerViewMessages = findViewById(R.id.recyclerView);
-        recyclerViewMessages.setLayoutManager(new LinearLayoutManager(this));
-        recyclerViewMessages.setAdapter(adapter);
+        this.recyclerViewMessages = findViewById(R.id.recyclerView);
+        this.recyclerViewMessages.setLayoutManager(new LinearLayoutManager(this));
+        this.recyclerViewMessages.setAdapter(adapter);
     }
 }
