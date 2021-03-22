@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,14 +31,19 @@ public class ChatsFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_chats, container, false);
 
         ImageButton searchButton = view.findViewById(R.id.search_button);
-        ImageButton addButton = view.findViewById(R.id.add_button);
-
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(view.getContext(), "search", Toast.LENGTH_SHORT).show();
+                Fragment searchChatFragment = new SearchChatFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.nav_host_fragment, searchChatFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
+
+        ImageButton addButton = view.findViewById(R.id.add_button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

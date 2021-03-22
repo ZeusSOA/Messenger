@@ -14,7 +14,7 @@ public class ChatListViewHolder extends RecyclerView.ViewHolder {
     private TextView chatname;
     public ChatListViewHolder(@NonNull View itemView) {
         super(itemView);
-        chatname = itemView.findViewById(R.id.chatname);
+        chatname = itemView.findViewById(R.id.chatname_text);
     }
 
     public TextView getChatname(){
