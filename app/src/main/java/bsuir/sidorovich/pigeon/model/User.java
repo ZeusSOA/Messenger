@@ -4,6 +4,7 @@ public class User {
     private String id;
     private String username;
     private String imageUrl;
+    private String password;
 
     //характеристика пользователя в контексте чата (возможно создание класса ChatUser extends User с этим полем)
     //если true -   пользователь имеет чат в своём списке чатов (то есть он может писать сообщения)
@@ -13,9 +14,7 @@ public class User {
     //суть - если есть хотя бы 1 участник не удалил чат из своего списка чатов, то чат не удаляется из БД на сервере, если 0 - удаляется
     private boolean isCurrentMember;
 
-    public User() {
-
-    }
+    public User() {}
 
     public User(String id, String username, String imageUrl) {
         this.id = id;
@@ -33,6 +32,14 @@ public class User {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getId() {

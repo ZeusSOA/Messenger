@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,15 +16,34 @@ import java.util.ArrayList;
 
 import bsuir.sidorovich.pigeon.R;
 import bsuir.sidorovich.pigeon.activities.ChatActivity;
+import bsuir.sidorovich.pigeon.model.ServerApi;
 import bsuir.sidorovich.pigeon.model.chat_hierarchy.Chat;
 import bsuir.sidorovich.pigeon.model.chat_hierarchy.GroupChat;
 import bsuir.sidorovich.pigeon.model.chat_hierarchy.SingleChat;
 
-public class ChatListAdapter extends RecyclerView.Adapter<ChatListViewHolder> {
+public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatListViewHolder> {
     private ArrayList<Chat> chats;
     private RecyclerView chatsView;
     private Fragment fragment;
     private int selectedChatIndex;
+
+    public static class ChatListViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView chatname;
+        private TextView chatId;
+        public ChatListViewHolder(@NonNull View itemView) {
+            super(itemView);
+            chatname = itemView.findViewById(R.id.chatname_text);
+            chatId = itemView.findViewById(R.id.chat_id_text);
+        }
+
+        public TextView getChatname(){
+            return chatname;
+        }
+        public TextView getChatId(){
+            return chatId;
+        }
+    }
 
     public ChatListAdapter(
             ArrayList<Chat> chats,
@@ -84,6 +104,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ChatListViewHolder holder, int position) {
         holder.getChatname().setText(chats.get(position).getChatname());
+        holder.getChatId().setText(chats.get(position).getId());
     }
 
     @Override
@@ -92,11 +113,13 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListViewHolder> {
     }
 
     public void removeSelectedItem() {
-        chats.remove(selectedChatIndex);
+        ServerApi.deleteChat(chats.remove(selectedChatIndex).getId());
         notifyItemRemoved(selectedChatIndex);
         notifyItemRangeChanged(selectedChatIndex, chats.size());
 
         //ServerApi.removeChat
+
+        //лучше - удалить только на сервере и обновить весь список
     }
 
 }

@@ -3,6 +3,7 @@ package bsuir.sidorovich.pigeon.activities.chats;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import bsuir.sidorovich.pigeon.R;
+import bsuir.sidorovich.pigeon.model.SqliteApi;
 import bsuir.sidorovich.pigeon.model.chat_hierarchy.Chat;
 import bsuir.sidorovich.pigeon.model.ServerApi;
 
@@ -27,6 +30,7 @@ public class ChatsFragment extends Fragment {
     private ArrayList<Chat> chats = ServerApi.getChats();
     private ChatListAdapter adapter;
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_chats, container, false);
 
@@ -43,11 +47,24 @@ public class ChatsFragment extends Fragment {
             }
         });
 
-        ImageButton addButton = view.findViewById(R.id.add_button);
-        addButton.setOnClickListener(new View.OnClickListener() {
+        ImageButton addUserButton = view.findViewById(R.id.add_user_button);
+        addUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(view.getContext(), "add", Toast.LENGTH_SHORT).show();
+                Fragment addUserFragment = new AddUserFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.nav_host_fragment, addUserFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+
+        ImageButton addGroupButton = view.findViewById(R.id.add_group_button);
+        addGroupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(view.getContext(), "add g", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -67,6 +84,12 @@ public class ChatsFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK)
             adapter.removeSelectedItem();
+
+        //как вариант:
+        //        if (resultCode == Activity.RESULT_OK)
+        //              adapter.remove -> server.remove
+        //              server.getList
+        //              adapter.notify data changed
     }
 }
 

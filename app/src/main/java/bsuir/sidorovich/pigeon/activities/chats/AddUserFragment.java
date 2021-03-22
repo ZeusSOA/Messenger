@@ -1,7 +1,5 @@
 package bsuir.sidorovich.pigeon.activities.chats;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -20,16 +18,16 @@ import java.util.ArrayList;
 
 import bsuir.sidorovich.pigeon.R;
 import bsuir.sidorovich.pigeon.model.ServerApi;
+import bsuir.sidorovich.pigeon.model.User;
 import bsuir.sidorovich.pigeon.model.chat_hierarchy.Chat;
 
-public class SearchChatFragment extends Fragment {
-    private ArrayList<Chat> chats = ServerApi.getChats();
-    private ArrayList<Chat> foundChats = new ArrayList<>();
-    private ChatListAdapter adapter;
+public class AddUserFragment extends Fragment {
+    private ArrayList<User> foundUsers = new ArrayList<>();
+    private UserListAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_chat_search, container, false);
+        final View view = inflater.inflate(R.layout.fragment_add_user, container, false);
 
         ImageButton backButton = view.findViewById(R.id.back_button);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -44,7 +42,7 @@ public class SearchChatFragment extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                foundChats.clear();
+                foundUsers.clear();
                 EditText searchEditText = view.findViewById(R.id.search_edit_text);
                 String textToSearch = searchEditText.getText().toString();
 
@@ -53,38 +51,21 @@ public class SearchChatFragment extends Fragment {
                     return;
                 }
 
-                boolean isId = false;
-                if (textToSearch.charAt(0) == '@') {
-                    textToSearch = textToSearch.substring(1);
-                    isId = true;
-                }
-                for (Chat chat : chats) {
-                    String string = isId ? chat.getId() : chat.getChatname();
-                    if (string.contains(textToSearch)) {
-                        foundChats.add(chat);
-                    }
-                }
+                foundUsers.addAll(ServerApi.getUsersByText(textToSearch));
 
-                if (foundChats.size() == 0)
+                if (foundUsers.size() == 0)
                     Toast.makeText(view.getContext(), "Чаты не найдены", Toast.LENGTH_LONG).show();
                 adapter.notifyDataSetChanged();
             }
         });
 
-        RecyclerView chatsView;
-        chatsView = view.findViewById(R.id.found_chat_list);
-        chatsView.setHasFixedSize(true);
-        chatsView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        adapter = new ChatListAdapter(foundChats, chatsView, this);
-        chatsView.setAdapter(adapter);
+        RecyclerView usersView;
+        usersView = view.findViewById(R.id.found_user_list);
+        usersView.setHasFixedSize(true);
+        usersView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        adapter = new UserListAdapter(foundUsers, usersView, this);
+        usersView.setAdapter(adapter);
 
         return view;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK)
-            adapter.removeSelectedItem();
     }
 }
