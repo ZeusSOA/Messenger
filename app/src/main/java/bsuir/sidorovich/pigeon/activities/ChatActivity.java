@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -37,6 +38,8 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView recyclerViewMessages;
     private DialogViewAdapter adapter;
 
+    private final int COUNT_SYMBOLS_IN_ROW  = 23;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +57,7 @@ public class ChatActivity extends AppCompatActivity {
                 sendOneMessage(v);
             }
         });
-        setChangedEditText();
+        setChangedEditText((RecyclerView)findViewById(R.id.recyclerView));
 
         // in
        /* Bundle arguments = getIntent().getExtras();
@@ -74,17 +77,23 @@ public class ChatActivity extends AppCompatActivity {
         //запрос на сервер для получения списка сообщений
     }
 
-    public void setChangedEditText(){
+    public void setChangedEditText(final RecyclerView recyclerView){
         @SuppressLint("WrongViewCast") final EditText editText = findViewById(R.id.example_edit_text);
 
         editText.addTextChangedListener(new TextWatcher(){
             @Override
             public void afterTextChanged(Editable s) {
-               /* if(editText.getText().toString().length()>=15){
+                if(editText.getText().toString().length() % COUNT_SYMBOLS_IN_ROW>=COUNT_SYMBOLS_IN_ROW){
                     System.out.println("yes");
+                    String oldString = editText.getText().toString();
+                    editText.getText().clear();
+
                     editText.setHeight(editText.getHeight()+10);
-                    editText.setText(editText.getText()+"\n");
-                }*/
+                    editText.setText("\n"+oldString);
+                    ViewGroup.LayoutParams params = recyclerView.getLayoutParams();
+                    params.height -= 10;
+                    recyclerView.requestLayout();
+                }
             }
 
             @Override
