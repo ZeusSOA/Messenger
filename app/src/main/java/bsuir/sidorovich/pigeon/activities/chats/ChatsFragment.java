@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -64,7 +67,36 @@ public class ChatsFragment extends Fragment {
         addGroupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(view.getContext(), "add g", Toast.LENGTH_SHORT).show();
+                PopupMenu popup = new PopupMenu(getActivity(), view.findViewById(R.id.add_group_button));
+                popup.inflate(R.menu.add_group_chat_menu);
+                Menu menu = popup.getMenu();
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        FragmentManager fragmentManager;
+                        FragmentTransaction fragmentTransaction;
+                        switch (item.getItemId()) {
+                            case R.id.create_menu_item:
+                                Fragment createGroupChatFragment = new CreateGroupChatFragment();
+                                fragmentManager = getFragmentManager();
+                                fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.nav_host_fragment, createGroupChatFragment);
+                                fragmentTransaction.addToBackStack(null);
+                                fragmentTransaction.commit();
+                                break;
+                            case R.id.join_menu_item:
+                                Fragment joinGroupChatFragment = new JoinGroupChatFragment();
+                                fragmentManager = getFragmentManager();
+                                fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.nav_host_fragment, joinGroupChatFragment);
+                                fragmentTransaction.addToBackStack(null);
+                                fragmentTransaction.commit();
+                                break;
+                        }
+                        return true;
+                    }
+                });
+                popup.show();
             }
         });
 
@@ -84,12 +116,6 @@ public class ChatsFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK)
             adapter.removeSelectedItem();
-
-        //как вариант:
-        //        if (resultCode == Activity.RESULT_OK)
-        //              adapter.remove -> server.remove
-        //              server.getList
-        //              adapter.notify data changed
     }
 }
 
