@@ -38,7 +38,7 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView recyclerViewMessages;
     private DialogViewAdapter adapter;
 
-    private final int COUNT_SYMBOLS_IN_ROW  = 23;
+    private final int COUNT_SYMBOLS_IN_ROW = 23;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class ChatActivity extends AppCompatActivity {
                 sendOneMessage(v);
             }
         });
-        setChangedEditText((RecyclerView)findViewById(R.id.recyclerView));
+        setChangedEditText((RecyclerView) findViewById(R.id.recyclerView));
 
         // in
        /* Bundle arguments = getIntent().getExtras();
@@ -74,22 +74,31 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        this.recyclerViewMessages = findViewById(R.id.recyclerView);
+        this.recyclerViewMessages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("-");
+
+            }
+        });
+
         //запрос на сервер для получения списка сообщений
     }
 
-    public void setChangedEditText(final RecyclerView recyclerView){
+    public void setChangedEditText(final RecyclerView recyclerView) {
         @SuppressLint("WrongViewCast") final EditText editText = findViewById(R.id.example_edit_text);
 
-        editText.addTextChangedListener(new TextWatcher(){
+        editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
-                if(editText.getText().toString().length() % COUNT_SYMBOLS_IN_ROW>=COUNT_SYMBOLS_IN_ROW){
-                    System.out.println("yes");
+                if (editText.getText().toString().length() % COUNT_SYMBOLS_IN_ROW >= COUNT_SYMBOLS_IN_ROW) {
+
                     String oldString = editText.getText().toString();
                     editText.getText().clear();
 
-                    editText.setHeight(editText.getHeight()+10);
-                    editText.setText("\n"+oldString);
+                    editText.setHeight(editText.getHeight() + 10);
+                    editText.setText("\n" + oldString);
                     ViewGroup.LayoutParams params = recyclerView.getLayoutParams();
                     params.height -= 10;
                     recyclerView.requestLayout();
@@ -107,11 +116,11 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    public void sendOneMessage(View View){
+    public void sendOneMessage(View View) {
 
-        EditText edit =  findViewById(R.id.example_edit_text);
+        EditText edit = findViewById(R.id.example_edit_text);
 
-        if(edit.getText().toString().length()>0) {
+        if (edit.getText().toString().length() > 0) {
 
             this.historyOfMessages.addOneSendedMessage(new Message(edit.getText().toString(), 1, "Anton Durko", new Date()));
             edit.getText().clear();
@@ -126,8 +135,8 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
-    public void updateActivity(ArrayList<Message> messages){
-        this.adapter.setParams(this,messages);
+    public void updateActivity(ArrayList<Message> messages) {
+        this.adapter.setParams(this, messages);
         this.recyclerViewMessages = findViewById(R.id.recyclerView);
         this.recyclerViewMessages.setLayoutManager(new LinearLayoutManager(this));
         this.recyclerViewMessages.setAdapter(adapter);

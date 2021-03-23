@@ -8,15 +8,16 @@
 
     <RelativeLayout
         android:id="@+id/message_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="95dp"
+        android:layout_width="178dp"
+        android:layout_height="93dp"
+        android:layout_alignParentRight="true"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@android:color/white"
+        android:background="#5089fa"
         android:padding="10dp">
 
         <TextView
@@ -34,13 +35,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="3dp"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:maxWidth="250dp"
+
             android:minWidth="120dp"
             android:text="Hi"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:paddingTop="25dp"/>
 
         <TextView
             android:id="@+id/date_text"
@@ -48,8 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/message_text"
             android:layout_alignRight="@+id/message_text"
-            android:layout_marginTop="15dp"
-            android:textColor="#b3b3b3"
+            android:textColor="@android:color/white"
             android:textSize="11sp"
             tools:text="11:34" />
 
