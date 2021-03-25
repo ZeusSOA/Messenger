@@ -33,5 +33,5 @@
         android:layout_height="60dp"
         android:background="@drawable/button_shape"
         android:text="@string/register"/>
-    
+
 </LinearLayout>
