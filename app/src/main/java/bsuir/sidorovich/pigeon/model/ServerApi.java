@@ -272,38 +272,43 @@ public class ServerApi {
             }
         }
     }
-    
-    
-    // Регистрация
-    // сервер проверяет в БД, зарегистрирован ли данный email
-    // если такого пользователя нет, то автоматическая регистрация без подтверждения и возврат id
-    // если есть - пустая строка
-    public static String userRegistration(String nickname, String password, String email) {
-        // отправка информации на сервер
-        return answer; //вместо answer ответ сервера
-    }
-    
-    // Вход в аккаунт
-    // сервер проверяет в БД совпадение email с паролем к нему
-    // если совпадает - id пользователя относящееся к данной записи в БД
-    // иначе пустую строку
-    public static String userVerification(String email, String password) {
-        // отправка информации на сервер
-        return answer;
-    }
-    
-    // Смена пароля
-    // сервер проверяет совпадение уже имеющегося пароля с учётной записбю в БД
-    // если совпадает, то меняет на новый пароль и возвращает true
-    // если нет, то false
-    public static boolean passwordChange(String email, String oldPassword, String newPassword) {
-        // отправка информации на сервер
-        return answer; // ответ сервера
-    }
-    
-    // Смена имени (не уникального)
-    // сервер без проверки изменяет имя пользователя в БД
-    public static void nicknameChange(String newNick) {
-        // отправка информации на сервера
-    }
+
+
+
+
+
+//    //функции Олега
+//
+//    // Регистрация
+//    // сервер проверяет в БД, зарегистрирован ли данный email
+//    // если такого пользователя нет, то автоматическая регистрация без подтверждения и возврат id
+//    // если есть - пустая строка
+//    public static String userRegistration(String nickname, String password, String email) {
+//        // отправка информации на сервер
+//        return answer; //вместо answer ответ сервера
+//    }
+//
+//    // Вход в аккаунт
+//    // сервер проверяет в БД совпадение email с паролем к нему
+//    // если совпадает - id пользователя относящееся к данной записи в БД
+//    // иначе пустую строку
+//    public static String userVerification(String email, String password) {
+//        // отправка информации на сервер
+//        return answer;
+//    }
+//
+//    // Смена пароля
+//    // сервер проверяет совпадение уже имеющегося пароля с учётной записбю в БД
+//    // если совпадает, то меняет на новый пароль и возвращает true
+//    // если нет, то false
+//    public static boolean passwordChange(String email, String oldPassword, String newPassword) {
+//        // отправка информации на сервер
+//        return answer; // ответ сервера
+//    }
+//
+//    // Смена имени (не уникального)
+//    // сервер без проверки изменяет имя пользователя в БД
+//    public static void nicknameChange(String newNick) {
+//        // отправка информации на сервера
+//    }
 }
