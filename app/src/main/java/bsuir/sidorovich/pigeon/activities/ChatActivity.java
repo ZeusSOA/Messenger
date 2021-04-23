@@ -65,7 +65,7 @@ public class ChatActivity extends AppCompatActivity {
         // in
        /* Bundle arguments = getIntent().getExtras();
         String chatId = arguments.getString("id");
-        TextView chatIdView = findViewById(R.id.chat_id);
+        TextView chatIdView = findViewById(R.id.chat_id_text);
         chatIdView.setText("@" + chatId);*/
 
         // out

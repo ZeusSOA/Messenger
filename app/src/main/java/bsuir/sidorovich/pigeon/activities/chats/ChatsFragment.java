@@ -1,42 +1,117 @@
 package bsuir.sidorovich.pigeon.activities.chats;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 import bsuir.sidorovich.pigeon.R;
-import bsuir.sidorovich.pigeon.model.Chat;
+import bsuir.sidorovich.pigeon.model.chat_hierarchy.Chat;
+import bsuir.sidorovich.pigeon.model.server_access.ServerApi;
+import bsuir.sidorovich.pigeon.model.server_access.server_api.ChatServiceApi;
+import bsuir.sidorovich.pigeon.model.server_access.server_api.UserServiceApi;
 
 public class ChatsFragment extends Fragment {
     //при необходимости при запуске приложения метод getChats() будет загружать список не в ОЗУ, как сейчас, а в БД
-    private ArrayList<Chat> chats = getChats();
+    private ArrayList<Chat> chats = ServerApi.getChats();
+    private ChatListAdapter adapter;
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_chats, container, false);
 
-        ImageButton searchButton = view.findViewById(R.id.search_button);
-        ImageButton addButton = view.findViewById(R.id.add_button);
+        ///
+        //кнопка для проверки какого-либо запроса
+        //находится во вкладке Чаты (левее всех)
+        Button serverButton = view.findViewById(R.id.server_button);
+        serverButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Toast.makeText(getActivity(), UserServiceApi.test(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), ChatServiceApi.test(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), ChatServiceApi.testObject(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), ChatServiceApi.test_getChatById(), Toast.LENGTH_LONG).show();
+            }
+        });
+        ///
 
+        ImageButton searchButton = view.findViewById(R.id.search_button);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(view.getContext(), "search", Toast.LENGTH_SHORT).show();
+                Fragment searchChatFragment = new SearchChatFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.nav_host_fragment, searchChatFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
-        addButton.setOnClickListener(new View.OnClickListener() {
+
+        ImageButton addUserButton = view.findViewById(R.id.add_user_button);
+        addUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(view.getContext(), "add", Toast.LENGTH_SHORT).show();
+                Fragment addUserFragment = new AddUserFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.nav_host_fragment, addUserFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+
+        ImageButton addGroupButton = view.findViewById(R.id.add_group_button);
+        addGroupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(getActivity(), view.findViewById(R.id.add_group_button));
+                popup.inflate(R.menu.add_group_chat_menu);
+                Menu menu = popup.getMenu();
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        FragmentManager fragmentManager;
+                        FragmentTransaction fragmentTransaction;
+                        switch (item.getItemId()) {
+                            case R.id.create_menu_item:
+                                Fragment createGroupChatFragment = new CreateGroupChatFragment();
+                                fragmentManager = getFragmentManager();
+                                fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.nav_host_fragment, createGroupChatFragment);
+                                fragmentTransaction.addToBackStack(null);
+                                fragmentTransaction.commit();
+                                break;
+                            case R.id.join_menu_item:
+                                Fragment joinGroupChatFragment = new JoinGroupChatFragment();
+                                fragmentManager = getFragmentManager();
+                                fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.nav_host_fragment, joinGroupChatFragment);
+                                fragmentTransaction.addToBackStack(null);
+                                fragmentTransaction.commit();
+                                break;
+                        }
+                        return true;
+                    }
+                });
+                popup.show();
             }
         });
 
@@ -45,29 +120,17 @@ public class ChatsFragment extends Fragment {
         chatsView = view.findViewById(R.id.chat_list);
         chatsView.setHasFixedSize(true);
         chatsView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        chatsView.setAdapter(new ChatListAdapter(chats, chatsView, this));
+        adapter = new ChatListAdapter(chats, chatsView, this);
+        chatsView.setAdapter(adapter);
 
         return view;
     }
 
-    //  клиентский метод взаимодействия с сервером (в будущем лучше перенести в отдельный класс)
-    public ArrayList<Chat> getChats() {
-        //отправить свой userID серверу
-        //сервер ищет, в каких чатах состоит userID
-        //сервер возвращает список чатов с chatID
-
-        //ChatView:
-        //название, id чата
-        //фото, последнее сообщение + время, уведомление
-
-        ArrayList<Chat> chats = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
-            Chat chat = new Chat();
-            chat.setChatname("chat_" + (i + 1));
-            chat.setId("id" + (i + 1001));
-            chats.add(chat);
-        }
-        return chats;
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK)
+            adapter.removeSelectedItem();
     }
 }
 

@@ -7,4 +7,6 @@
     <string name="login">Войти</string>
     <string name="register">Зарегистрироваться</string>
     <string name="LogOut">Выйти из аккаунта</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
