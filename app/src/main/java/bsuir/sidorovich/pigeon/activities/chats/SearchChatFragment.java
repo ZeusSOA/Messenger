@@ -19,7 +19,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import bsuir.sidorovich.pigeon.R;
-import bsuir.sidorovich.pigeon.model.ServerApi;
+import bsuir.sidorovich.pigeon.model.server_access.ServerApi;
 import bsuir.sidorovich.pigeon.model.chat_hierarchy.Chat;
 
 public class SearchChatFragment extends Fragment {

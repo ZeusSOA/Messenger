@@ -3,18 +3,17 @@ package bsuir.sidorovich.pigeon.activities.chats;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -24,9 +23,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import bsuir.sidorovich.pigeon.R;
-import bsuir.sidorovich.pigeon.model.SqliteApi;
 import bsuir.sidorovich.pigeon.model.chat_hierarchy.Chat;
-import bsuir.sidorovich.pigeon.model.ServerApi;
+import bsuir.sidorovich.pigeon.model.server_access.ServerApi;
+import bsuir.sidorovich.pigeon.model.server_access.server_api.ChatServiceApi;
+import bsuir.sidorovich.pigeon.model.server_access.server_api.UserServiceApi;
 
 public class ChatsFragment extends Fragment {
     //при необходимости при запуске приложения метод getChats() будет загружать список не в ОЗУ, как сейчас, а в БД
@@ -36,6 +36,21 @@ public class ChatsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_chats, container, false);
+
+        ///
+        //кнопка для проверки какого-либо запроса
+        //находится во вкладке Чаты (левее всех)
+        Button serverButton = view.findViewById(R.id.server_button);
+        serverButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Toast.makeText(getActivity(), UserServiceApi.test(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), ChatServiceApi.test(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), ChatServiceApi.testObject(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), ChatServiceApi.test_getChatById(), Toast.LENGTH_LONG).show();
+            }
+        });
+        ///
 
         ImageButton searchButton = view.findViewById(R.id.search_button);
         searchButton.setOnClickListener(new View.OnClickListener() {

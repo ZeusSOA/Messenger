@@ -1,7 +1,8 @@
-package bsuir.sidorovich.pigeon.model;
+package bsuir.sidorovich.pigeon.model.server_access;
 
 import java.util.ArrayList;
 
+import bsuir.sidorovich.pigeon.model.User;
 import bsuir.sidorovich.pigeon.model.chat_hierarchy.Chat;
 import bsuir.sidorovich.pigeon.model.chat_hierarchy.GroupChat;
 import bsuir.sidorovich.pigeon.model.chat_hierarchy.SingleChat;

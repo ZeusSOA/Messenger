@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 
 import bsuir.sidorovich.pigeon.R;
 import bsuir.sidorovich.pigeon.activities.ChatActivity;
-import bsuir.sidorovich.pigeon.model.ServerApi;
+import bsuir.sidorovich.pigeon.model.server_access.ServerApi;
 import bsuir.sidorovich.pigeon.model.chat_hierarchy.Chat;
 import bsuir.sidorovich.pigeon.model.chat_hierarchy.GroupChat;
 import bsuir.sidorovich.pigeon.model.chat_hierarchy.SingleChat;

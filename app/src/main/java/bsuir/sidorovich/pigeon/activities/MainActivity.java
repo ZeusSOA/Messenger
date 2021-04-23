@@ -11,7 +11,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import bsuir.sidorovich.pigeon.R;
-import bsuir.sidorovich.pigeon.model.ServerApi;
+import bsuir.sidorovich.pigeon.model.server_access.ServerApi;
 import bsuir.sidorovich.pigeon.model.SqliteApi;
 
 public class MainActivity extends AppCompatActivity {
