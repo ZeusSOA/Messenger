@@ -144,4 +144,34 @@ public class ChatActivity extends AppCompatActivity {
         this.recyclerViewMessages.setLayoutManager(new LinearLayoutManager(this));
         this.recyclerViewMessages.setAdapter(adapter);
     }
+
+    public void installRadioGroup(){
+        findViewById(R.id.button_Cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              //  findViewById(R.id.radioGroup).br;
+                findViewById(R.id.radioGroup).setVisibility(View.INVISIBLE);
+            }
+        });
+
+        findViewById(R.id.button_OK).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                findViewById(R.id.radioGroup).setVisibility(View.INVISIBLE);
+
+                if(findViewById(R.id.radioButton_Delete).isActivated()){
+
+                }
+
+                if(findViewById(R.id.radioButton_Reply).isActivated()){
+
+                }
+
+                if(findViewById(R.id.radioButton_Forward).isActivated()){
+
+                }
+            }
+        });
+    }
 }

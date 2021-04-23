@@ -29,8 +29,15 @@ public class StartActivity extends AppCompatActivity {
 
         Button login = findViewById(R.id.login);
         Button register = findViewById(R.id.register);
+Button button  =findViewById(R.id.button);
 
-        login.setOnClickListener(new View.OnClickListener() {
+button.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        startActivity(new Intent(StartActivity.this, ChatActivity.class));
+    }
+});
+        /*login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(StartActivity.this, LoginActivity.class));
@@ -42,7 +49,7 @@ public class StartActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(StartActivity.this, RegisterActivity.class));
             }
-        });
+        });*/
     }
 
 

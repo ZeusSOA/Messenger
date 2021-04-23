@@ -107,11 +107,12 @@ public class DialogViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 
         if (selectedPosition == position) {
-            //((ChatActivity) this.context).findViewById(R.id.radioGroup).setVisibility(View.VISIBLE);
-            //((ChatActivity) this.context).findViewById(R.id.radioGroup).bringToFront();
+            ((ChatActivity) this.context).findViewById(R.id.radioGroup).setVisibility(View.VISIBLE);
+            ((ChatActivity) this.context).findViewById(R.id.radioGroup).bringToFront();
+            //holder.itemView.gette
             //holder.itemView.setBackgroundColor(Color.parseColor("#000000"));
         } else {
-            holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
+            //holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

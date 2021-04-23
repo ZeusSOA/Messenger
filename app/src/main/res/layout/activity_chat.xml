@@ -89,33 +89,40 @@
         android:layout_marginLeft="50dp"
         android:layout_marginBottom="224dp"
         android:visibility="invisible"
+        android:background="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/radioButton_Reply"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Reply" />
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/radioButton_Delete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Delete" />
 
         <RadioButton
-            android:id="@+id/radioButton3"
+            android:id="@+id/radioButton_Forward"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Forward" />
 
         <Button
-            android:id="@+id/button6"
+            android:id="@+id/button_OK"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="OK" />
+
+        <Button
+            android:id="@+id/button_Cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancel" />
     </RadioGroup>
 
     <EditText
