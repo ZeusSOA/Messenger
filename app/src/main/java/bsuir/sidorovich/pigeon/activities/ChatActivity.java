@@ -54,7 +54,6 @@ public class ChatActivity extends AppCompatActivity {
         Button sendButton = findViewById(R.id.button5);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 sendOneMessage(v);
@@ -133,7 +132,6 @@ public class ChatActivity extends AppCompatActivity {
             this.recyclerViewMessages = findViewById(R.id.recyclerView);
             this.recyclerViewMessages.setLayoutManager(new LinearLayoutManager(this));
             this.recyclerViewMessages.setAdapter(adapter);
-
             updateActivity(historyOfMessages.getHistoryOfMessagesList());
         }
     }
@@ -142,11 +140,12 @@ public class ChatActivity extends AppCompatActivity {
         this.adapter.setParams(this, messages);
         this.recyclerViewMessages = findViewById(R.id.recyclerView);
         this.recyclerViewMessages.setLayoutManager(new LinearLayoutManager(this));
+        this.recyclerViewMessages.scrollToPosition(historyOfMessages.getHistoryOfMessagesList().size()-1);
         this.recyclerViewMessages.setAdapter(adapter);
     }
 
     public void installRadioGroup(){
-        findViewById(R.id.button_Cancel).setOnClickListener(new View.OnClickListener() {
+       /* findViewById(R.id.button_Cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
               //  findViewById(R.id.radioGroup).br;
@@ -173,5 +172,5 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         });
-    }
+    */}
 }

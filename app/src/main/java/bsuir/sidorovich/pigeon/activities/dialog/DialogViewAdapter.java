@@ -97,7 +97,7 @@ public class DialogViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (viewType == MESSAGE_TYPE_IN) {
             return new MessageInViewHolder(LayoutInflater.from(context).inflate(R.layout.message_in, parent, false));
         }
-        this.parentView = parent.findViewById(R.id.radioGroup);
+//        this.parentView = parent.findViewById(R.id.radioGroup);
         // parent.findViewById(R.id.radioGroup);
         return new MessageOutViewHolder(LayoutInflater.from(context).inflate(R.layout.message_out, parent, false));
     }
@@ -107,8 +107,8 @@ public class DialogViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 
         if (selectedPosition == position) {
-            ((ChatActivity) this.context).findViewById(R.id.radioGroup).setVisibility(View.VISIBLE);
-            ((ChatActivity) this.context).findViewById(R.id.radioGroup).bringToFront();
+          //  ((ChatActivity) this.context).findViewById(R.id.radioGroup).setVisibility(View.VISIBLE);
+           // ((ChatActivity) this.context).findViewById(R.id.radioGroup).bringToFront();
             //holder.itemView.gette
             //holder.itemView.setBackgroundColor(Color.parseColor("#000000"));
         } else {
