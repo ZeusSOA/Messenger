@@ -48,6 +48,7 @@ public class MessageServiceApi {
                     }
                     try {
                         activity.fillHistoryOfMessages(listOfMessages);
+                        activity.setTitle(response.body().chatName);
                     } catch (CloneNotSupportedException e) {
                         e.printStackTrace();
                     }
