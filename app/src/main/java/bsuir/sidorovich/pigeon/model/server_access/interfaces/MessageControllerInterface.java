@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import bsuir.sidorovich.pigeon.model.server_access.entities.ChatEntity;
 import bsuir.sidorovich.pigeon.model.server_access.entities.MessageEntity;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -12,9 +13,6 @@ import retrofit2.http.Path;
 
 public interface MessageControllerInterface {
 
-    @GET("/{chatId}/message")
-    Call<Iterable<MessageEntity>> getChat(@Path("id") Long chatId);
-
-    @POST
-    Call<MessageEntity> createMessage(@Body MessageEntity messageEntity);
+    @POST("./")
+    Call<MessageEntity> createMessage(@Body MessageEntity body);
 }

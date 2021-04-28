@@ -2,18 +2,19 @@ package bsuir.sidorovich.pigeon.model.server_access.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class MessageEntity {
 //public class MessageEntity implements Serializable {
     private static final long serialVersionUID = 8272313331707744189L;
 
-    private long id;
+    public long id;
 
-    private ChatEntity chat;
+    public ChatEntity chat;
 
-    private UserEntity user;
+    public UserEntity user;
 
-//    private LocalDateTime sendTime;
+    public Date sendTime;
 
-    private String text;
+    public String text;
 }

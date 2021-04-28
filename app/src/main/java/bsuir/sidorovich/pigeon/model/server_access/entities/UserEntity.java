@@ -9,11 +9,11 @@ public class UserEntity {
 
     private static final long serialVersionUID = -2402998216354216363L;
 
-    private long id;
+    public long id;
 
     private String email;
 
-    private String username;
+    public String username;
 
     private String password;
 

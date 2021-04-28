@@ -2,7 +2,18 @@ package bsuir.sidorovich.pigeon.model.server_access.server_api;
 
 import android.util.Log;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import bsuir.sidorovich.pigeon.R;
+import bsuir.sidorovich.pigeon.activities.ChatActivity;
+import bsuir.sidorovich.pigeon.model.Message;
 import bsuir.sidorovich.pigeon.model.server_access.entities.ChatEntity;
+import bsuir.sidorovich.pigeon.model.server_access.entities.MessageEntity;
 import bsuir.sidorovich.pigeon.model.server_access.entities.TestEntity;
 import bsuir.sidorovich.pigeon.model.server_access.interfaces.ChatControllerInterface;
 import retrofit2.Call;
@@ -73,7 +84,6 @@ public class ChatServiceApi {
 
         return testResponse;
     }
-
     //метод получения чата по id
     //взаимодействует с БД и НЕ РАБОТАЕТ (протестировать, когда будет решена проблема с зацикливанием на сервере)
     public static String test_getChatById() {
@@ -83,10 +93,16 @@ public class ChatServiceApi {
                 .build();
         ChatControllerInterface service = retrofit.create(ChatControllerInterface.class);
 
-        Call<ChatEntity> call = service.getChatById(2L);
+        Call<ChatEntity> call = service.getChatById(1L);
+
         call.enqueue(new Callback<ChatEntity>() {
+            private ChatEntity chatEntity;
+
             @Override
             public void onResponse(Call<ChatEntity> call, Response<ChatEntity> response) {
+ this.chatEntity = response.body();
+                testResponse = "! successful !";
+System.out.println("alfkds;lf;sdfmsdfklsjkdfl");
                 if (response.isSuccessful()) {
                     testResponse = "! successful !";
 //                    TestEntity responseEntity = response.body();
@@ -103,7 +119,38 @@ public class ChatServiceApi {
                     Log.e("Message", t.getMessage());
             }
         });
-
         return testResponse;
     }
+
+    public static ChatEntity getMessagesFromChatById(long chatId, long userId)  {
+
+         ArrayList<ChatEntity> listOfMessages = new ArrayList<>();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://35.237.150.75:2345/chat/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ChatControllerInterface service = retrofit.create(ChatControllerInterface.class);
+
+        Call<ChatEntity> call = service.getChatById(1L);
+
+call.enqueue(new Callback<ChatEntity>() {
+    @Override
+    public void onResponse(Call<ChatEntity> call, Response<ChatEntity> response) {
+        System.out.println("alfkds;lf;sdfmsdfklsjkdfl"+response.body());
+      //  for (MessageEntity messageEntity:response.body().messages) {
+            listOfMessages.add(response.body());
+        //}
+    }
+
+    @Override
+    public void onFailure(Call<ChatEntity> call, Throwable t) {
+
+    }
+});
+
+return listOfMessages.get(0);
+
+    }
+
+
 }

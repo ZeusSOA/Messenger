@@ -13,7 +13,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class UserServiceApi {
     private static String testResponse = "empty";
 
-
+    public static long userId;
     //метод получения пользователя по id
     //взаимодействует с БД и НЕ РАБОТАЕТ (протестировать, когда будет решена проблема с зацикливанием на сервере)
     //+ не работает даже в браузере

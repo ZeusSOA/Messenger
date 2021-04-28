@@ -16,10 +16,13 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.EventListener;
 
@@ -27,6 +30,13 @@ import bsuir.sidorovich.pigeon.R;
 import bsuir.sidorovich.pigeon.activities.dialog.DialogViewAdapter;
 import bsuir.sidorovich.pigeon.activities.dialog.HistoryOfMessages;
 import bsuir.sidorovich.pigeon.model.Message;
+import bsuir.sidorovich.pigeon.model.server_access.entities.ChatEntity;
+import bsuir.sidorovich.pigeon.model.server_access.entities.ChatType;
+import bsuir.sidorovich.pigeon.model.server_access.entities.MessageEntity;
+import bsuir.sidorovich.pigeon.model.server_access.entities.UserEntity;
+import bsuir.sidorovich.pigeon.model.server_access.server_api.ChatServiceApi;
+import bsuir.sidorovich.pigeon.model.server_access.server_api.MessageServiceApi;
+import bsuir.sidorovich.pigeon.model.server_access.server_api.UserServiceApi;
 
 // activity с возможностью ввода и отображения сообщений
 // реализация - Антон Дурко
@@ -37,21 +47,56 @@ import bsuir.sidorovich.pigeon.model.Message;
 
 public class ChatActivity extends AppCompatActivity {
 
-    private HistoryOfMessages historyOfMessages;
+    public HistoryOfMessages historyOfMessages;
     private RecyclerView recyclerViewMessages;
     private DialogViewAdapter adapter;
 
-    private final int COUNT_SYMBOLS_IN_ROW = 23;
+    public void fillHistoryOfMessages(ArrayList<MessageEntity> list) throws CloneNotSupportedException {
+
+        Message message;
+
+        System.out.println("fill");
+        for (MessageEntity messageEntity : list) {
+            message = new Message(messageEntity.text, messageEntity.user.id == UserServiceApi.userId ? 1 : 2, messageEntity.user.username, new Date(), messageEntity.id);
+            System.out.println(messageEntity.user.username);
+            this.historyOfMessages.addOneSendedMessage(message);
+        }
+
+        sortMessagesById();
+
+        this.adapter.setParams(this, this.historyOfMessages.getHistoryOfMessagesList());
+
+        this.recyclerViewMessages = findViewById(R.id.recyclerView);
+        this.recyclerViewMessages.setLayoutManager(new LinearLayoutManager(this));
+        this.recyclerViewMessages.setAdapter(adapter);
+        updateActivity(historyOfMessages.getHistoryOfMessagesList());
+    }
+
+    public void sortMessagesById() throws CloneNotSupportedException {
+        for (int i = 0; i < historyOfMessages.getHistoryOfMessagesList().size(); i++) {
+            for (int j = i+1; j < historyOfMessages.getHistoryOfMessagesList().size(); j++) {
+                if (historyOfMessages.getHistoryOfMessagesList().get(j).id < historyOfMessages.getHistoryOfMessagesList().get(i).id) {
+                    Message temp;
+                    temp = historyOfMessages.getHistoryOfMessagesList().get(i).clone();
+                    historyOfMessages.getHistoryOfMessagesList().get(i).set(historyOfMessages.getHistoryOfMessagesList().get(j).clone());
+                    historyOfMessages.getHistoryOfMessagesList().get(j).set(temp);
+                }
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        UserServiceApi.userId = 1L;
 
         this.adapter = new DialogViewAdapter(this);
         this.historyOfMessages = new HistoryOfMessages();
 
-        Button sendButton = findViewById(R.id.button5);
+        ImageButton sendButton = findViewById(R.id.send_button);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,16 +104,9 @@ public class ChatActivity extends AppCompatActivity {
                 sendOneMessage(v);
             }
         });
-        setChangedEditText((RecyclerView) findViewById(R.id.recyclerView));
 
-        // in
-       /* Bundle arguments = getIntent().getExtras();
-        String chatId = arguments.getString("id");
-        TextView chatIdView = findViewById(R.id.chat_id_text);
-        chatIdView.setText("@" + chatId);*/
-
-        // out
         ImageButton backButton = findViewById(R.id.back_button);
+
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,100 +115,55 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         this.recyclerViewMessages = findViewById(R.id.recyclerView);
-        this.recyclerViewMessages.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("-");
 
-            }
-        });
-
-        //запрос на сервер для получения списка сообщений
+        MessageServiceApi.getMessagesFromChatById(1L, this);
     }
 
-    public void setChangedEditText(final RecyclerView recyclerView) {
-        @SuppressLint("WrongViewCast") final EditText editText = findViewById(R.id.example_edit_text);
+    public MessageEntity fillEntity() {
 
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (editText.getText().toString().length() % COUNT_SYMBOLS_IN_ROW >= COUNT_SYMBOLS_IN_ROW) {
+        MessageEntity messageEntity = new MessageEntity();
 
-                    String oldString = editText.getText().toString();
-                    editText.getText().clear();
+        messageEntity.text = ((EditText) findViewById(R.id.example_edit_text)).getText().toString();
+        messageEntity.user = new UserEntity();
+        messageEntity.chat = new ChatEntity();
+        messageEntity.chat.id = 1L;
+        messageEntity.chat.chatName = "single";
+        messageEntity.chat.chatType = ChatType.SINGLE;
+        messageEntity.user.id = UserServiceApi.userId;
+        messageEntity.id = historyOfMessages.getHistoryOfMessagesList().size() + 1;
+        //messageEntity.sendTime=Calendar.getInstance().getTime();
+        System.out.println("user"+ messageEntity.user.username);
 
-                    editText.setHeight(editText.getHeight() + 10);
-                    editText.setText("\n" + oldString);
-                    ViewGroup.LayoutParams params = recyclerView.getLayoutParams();
-                    params.height -= 10;
-                    recyclerView.requestLayout();
-                }
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-        });
+        return messageEntity;
     }
 
     public void sendOneMessage(View View) {
 
+        MessageEntity messageEntity = fillEntity();
+
+        MessageServiceApi.sendMessage(messageEntity);
+
         EditText edit = findViewById(R.id.example_edit_text);
 
-        if (edit.getText().toString().length() > 0) {
+        //if (edit.getText().toString().length() > 0) {
 
-            this.historyOfMessages.addOneSendedMessage(new Message(edit.getText().toString(), 1, "Anton Durko", new Date()));
-            edit.getText().clear();
+        this.historyOfMessages.addOneSendedMessage(new Message(edit.getText().toString(), 1, messageEntity.user.username, new Date(),historyOfMessages.getHistoryOfMessagesList().size()+1));
+        edit.getText().clear();
 
-            this.adapter.setParams(this, this.historyOfMessages.getHistoryOfMessagesList());
+        this.adapter.setParams(this, this.historyOfMessages.getHistoryOfMessagesList());
 
-            this.recyclerViewMessages = findViewById(R.id.recyclerView);
-            this.recyclerViewMessages.setLayoutManager(new LinearLayoutManager(this));
-            this.recyclerViewMessages.setAdapter(adapter);
-            updateActivity(historyOfMessages.getHistoryOfMessagesList());
-        }
+        this.recyclerViewMessages = findViewById(R.id.recyclerView);
+        this.recyclerViewMessages.setLayoutManager(new LinearLayoutManager(this));
+        this.recyclerViewMessages.setAdapter(adapter);
+        updateActivity(historyOfMessages.getHistoryOfMessagesList());
+        //  }
     }
 
     public void updateActivity(ArrayList<Message> messages) {
         this.adapter.setParams(this, messages);
         this.recyclerViewMessages = findViewById(R.id.recyclerView);
         this.recyclerViewMessages.setLayoutManager(new LinearLayoutManager(this));
-        this.recyclerViewMessages.scrollToPosition(historyOfMessages.getHistoryOfMessagesList().size()-1);
+        this.recyclerViewMessages.scrollToPosition(historyOfMessages.getHistoryOfMessagesList().size() - 1);
         this.recyclerViewMessages.setAdapter(adapter);
     }
-
-    public void installRadioGroup(){
-       /* findViewById(R.id.button_Cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              //  findViewById(R.id.radioGroup).br;
-                findViewById(R.id.radioGroup).setVisibility(View.INVISIBLE);
-            }
-        });
-
-        findViewById(R.id.button_OK).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                findViewById(R.id.radioGroup).setVisibility(View.INVISIBLE);
-
-                if(findViewById(R.id.radioButton_Delete).isActivated()){
-
-                }
-
-                if(findViewById(R.id.radioButton_Reply).isActivated()){
-
-                }
-
-                if(findViewById(R.id.radioButton_Forward).isActivated()){
-
-                }
-            }
-        });
-    */}
 }

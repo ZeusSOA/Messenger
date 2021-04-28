@@ -1,6 +1,10 @@
 package bsuir.sidorovich.pigeon.model.server_access.interfaces;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import bsuir.sidorovich.pigeon.model.server_access.entities.ChatEntity;
+import bsuir.sidorovich.pigeon.model.server_access.entities.MessageEntity;
 import bsuir.sidorovich.pigeon.model.server_access.entities.TestEntity;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -17,4 +21,5 @@ public interface ChatControllerInterface {
 
     @GET("{id}")
     Call<ChatEntity> getChatById(@Path("id") Long id);
+
 }

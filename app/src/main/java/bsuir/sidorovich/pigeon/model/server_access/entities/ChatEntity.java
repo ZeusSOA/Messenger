@@ -8,13 +8,13 @@ public class ChatEntity {
 //public class ChatEntity implements Serializable {
     private static final long serialVersionUID = 7696060980312070187L;
 
-    private long id;
+    public long id;
 
-    private ChatType chatType;
+    public ChatType chatType;
 
-    private String chatName;
+    public String chatName;
 
     private List<UserEntity> users = new ArrayList<>();
 
-    private List<MessageEntity> messages = new ArrayList<>();
+    public List<MessageEntity> messages = new ArrayList<>();
 }

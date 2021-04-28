@@ -27,8 +27,6 @@ public class DialogViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public static final int MESSAGE_TYPE_IN = 1;
     public static final int MESSAGE_TYPE_OUT = 2;
 
-    private RadioGroup parentView;
-
     private int selectedPosition = -1;
 
     public void setParams(Context context, ArrayList<Message> list) {
@@ -65,7 +63,7 @@ public class DialogViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             String date = df.format(Calendar.getInstance().getTime());
 
             dateTV.setText(date);
-            authorTV.setText("anton");
+            authorTV.setText(messageModel.author);
         }
     }
 
@@ -97,23 +95,12 @@ public class DialogViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (viewType == MESSAGE_TYPE_IN) {
             return new MessageInViewHolder(LayoutInflater.from(context).inflate(R.layout.message_in, parent, false));
         }
-//        this.parentView = parent.findViewById(R.id.radioGroup);
-        // parent.findViewById(R.id.radioGroup);
         return new MessageOutViewHolder(LayoutInflater.from(context).inflate(R.layout.message_out, parent, false));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-
-        if (selectedPosition == position) {
-          //  ((ChatActivity) this.context).findViewById(R.id.radioGroup).setVisibility(View.VISIBLE);
-           // ((ChatActivity) this.context).findViewById(R.id.radioGroup).bringToFront();
-            //holder.itemView.gette
-            //holder.itemView.setBackgroundColor(Color.parseColor("#000000"));
-        } else {
-            //holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
-        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
