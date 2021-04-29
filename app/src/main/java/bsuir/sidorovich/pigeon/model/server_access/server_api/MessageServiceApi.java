@@ -35,7 +35,7 @@ public class MessageServiceApi {
 
         ChatControllerInterface service = retrofit.create(ChatControllerInterface.class);
 
-        Call<ChatEntity> call = service.getChatById(1L);
+        Call<ChatEntity> call = service.getChatById(ChatServiceApi.currentChatId);
 
         call.enqueue(new Callback<ChatEntity>() {
             @Override
@@ -48,7 +48,7 @@ public class MessageServiceApi {
                     }
                     try {
                         activity.fillHistoryOfMessages(listOfMessages);
-                        activity.setTitle(response.body().chatName);
+//                        activity.setTitle(response.body().chatName);
                     } catch (CloneNotSupportedException e) {
                         e.printStackTrace();
                     }

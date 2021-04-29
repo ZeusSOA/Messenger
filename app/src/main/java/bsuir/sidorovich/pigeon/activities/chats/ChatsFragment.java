@@ -37,21 +37,6 @@ public class ChatsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_chats, container, false);
 
-        ///
-        //кнопка для проверки какого-либо запроса
-        //находится во вкладке Чаты (левее всех)
-        Button serverButton = view.findViewById(R.id.server_button);
-        serverButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Toast.makeText(getActivity(), UserServiceApi.test(), Toast.LENGTH_LONG).show();
-//                Toast.makeText(getActivity(), ChatServiceApi.test(), Toast.LENGTH_LONG).show();
-//                Toast.makeText(getActivity(), ChatServiceApi.testObject(), Toast.LENGTH_LONG).show();
-                Toast.makeText(getActivity(), ChatServiceApi.test_getChatById(), Toast.LENGTH_LONG).show();
-            }
-        });
-        ///
-
         ImageButton searchButton = view.findViewById(R.id.search_button);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override

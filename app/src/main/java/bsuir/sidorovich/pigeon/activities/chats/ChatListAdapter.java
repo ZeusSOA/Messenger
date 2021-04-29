@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,10 +31,15 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
 
         private TextView chatname;
         private TextView chatId;
+        private ImageView chatCircle;
+        private ImageView chatIcon;
+
         public ChatListViewHolder(@NonNull View itemView) {
             super(itemView);
             chatname = itemView.findViewById(R.id.chatname_text);
             chatId = itemView.findViewById(R.id.chat_id_text);
+            chatCircle = itemView.findViewById(R.id.chat_circle);
+            chatIcon = itemView.findViewById(R.id.chat_icon);
         }
 
         public TextView getChatname(){
@@ -41,6 +47,12 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
         }
         public TextView getChatId(){
             return chatId;
+        }
+        public ImageView getChatCircle() {
+            return chatCircle;
+        }
+        public ImageView getChatIcon() {
+            return chatIcon;
         }
     }
 
@@ -103,7 +115,14 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ChatLi
     @Override
     public void onBindViewHolder(@NonNull ChatListViewHolder holder, int position) {
         holder.getChatname().setText(chats.get(position).getChatname());
-        holder.getChatId().setText(chats.get(position).getId());
+        holder.getChatId().setText("@" + chats.get(position).getId());
+        if (chats.get(position) instanceof GroupChat) {
+            holder.getChatCircle().setImageResource(R.drawable.circle_group);
+            holder.getChatIcon().setImageResource(R.drawable.ic_group);
+        } else if (chats.get(position) instanceof SingleChat) {
+            holder.getChatCircle().setImageResource(R.drawable.circle_user);
+            holder.getChatIcon().setImageResource(R.drawable.ic_user);
+        }
     }
 
     @Override

@@ -25,6 +25,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ChatServiceApi {
     private static String testResponse = "empty";
+    public static Long currentChatId;
 
     //метод передачи и приёма строки
     //не взаимодействует с БД и работает

@@ -1,10 +1,14 @@
 package bsuir.sidorovich.pigeon.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -28,8 +32,10 @@ import java.util.Date;
 import java.util.EventListener;
 
 import bsuir.sidorovich.pigeon.R;
+import bsuir.sidorovich.pigeon.activities.chats.SearchChatFragment;
 import bsuir.sidorovich.pigeon.activities.dialog.DialogViewAdapter;
 import bsuir.sidorovich.pigeon.activities.dialog.HistoryOfMessages;
+import bsuir.sidorovich.pigeon.activities.dialog.MembersActivity;
 import bsuir.sidorovich.pigeon.model.Message;
 import bsuir.sidorovich.pigeon.model.server_access.entities.ChatEntity;
 import bsuir.sidorovich.pigeon.model.server_access.entities.ChatType;
@@ -60,7 +66,16 @@ public class ChatActivity extends AppCompatActivity {
         Message message;
 
         for (MessageEntity messageEntity : list) {
-            message = new Message(messageEntity.text, messageEntity.user.id == UserServiceApi.userId ? 1 : 2, messageEntity.user.username, new Date(), messageEntity.id);
+            String author = null;
+            if (messageEntity.user.id == 1L) {
+                author = "Joseph Hensley";
+            } else if (messageEntity.user.id == 2L) {
+                author = "Steven Waters";
+            } else if (messageEntity.user.id == 3L) {
+                author = "Simon Morris";
+            }
+            message = new Message(messageEntity.text, messageEntity.user.id == UserServiceApi.userId ? 1 : 2, author, new Date(), messageEntity.id);
+//            message = new Message(messageEntity.text, messageEntity.user.id == UserServiceApi.userId ? 1 : 2, messageEntity.user.username, new Date(), messageEntity.id);
             System.out.println(messageEntity.user.username);
             this.historyOfMessages.addOneSendedMessage(message);
         }
@@ -94,6 +109,30 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        Bundle arguments = getIntent().getExtras();
+        String chatId = arguments.getString("id");
+
+        switch (chatId) {
+            case "38":
+                setTitle("Simon Morris");
+                ChatServiceApi.currentChatId = 2L;
+                break;
+            case "112":
+                setTitle("Hackathon 2021");
+                ChatServiceApi.currentChatId = 2L;
+                break;
+            case "191":
+                setTitle("House №54 Neighbors");
+                ChatServiceApi.currentChatId = 4L;
+                break;
+            case "8":
+                setTitle("Steven Waters");
+                ChatServiceApi.currentChatId = 1L;
+                break;
+
+        }
+
+
         UserServiceApi.userId = 1L;
 
         this.adapter = new DialogViewAdapter(this);
@@ -117,9 +156,18 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        ImageButton peopleButton = findViewById(R.id.people_button);
+
+        peopleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(v.getContext(), MembersActivity.class));
+            }
+        });
+
         this.recyclerViewMessages = findViewById(R.id.recyclerView);
 
-        MessageServiceApi.getMessagesFromChatById(1L, this);
+        MessageServiceApi.getMessagesFromChatById(ChatServiceApi.currentChatId, this);
     }
 
     public MessageEntity fillEntity() {
@@ -129,7 +177,7 @@ public class ChatActivity extends AppCompatActivity {
         messageEntity.text = ((EditText) findViewById(R.id.example_edit_text)).getText().toString();
         messageEntity.user = new UserEntity();
         messageEntity.chat = new ChatEntity();
-        messageEntity.chat.id = 1L;
+        messageEntity.chat.id = ChatServiceApi.currentChatId;
         messageEntity.chat.chatName = "single";
         messageEntity.chat.chatType = ChatType.SINGLE;
         messageEntity.user.id = UserServiceApi.userId;
@@ -150,7 +198,16 @@ public class ChatActivity extends AppCompatActivity {
 
             MessageServiceApi.sendMessage(messageEntity);
 
-            this.historyOfMessages.addOneSendedMessage(new Message(edit.getText().toString(), 1, messageEntity.user.username, new Date(), historyOfMessages.getHistoryOfMessagesList().size() + 1));
+            String author = null;
+            if (messageEntity.user.id == 1L) {
+                author = "Joseph Hensley";
+            } else if (messageEntity.user.id == 2L) {
+                author = "Steven Waters";
+            } else if (messageEntity.user.id == 3L) {
+                author = "Simon Morris";
+            }
+            this.historyOfMessages.addOneSendedMessage(new Message(edit.getText().toString(), 1, author, new Date(), historyOfMessages.getHistoryOfMessagesList().size() + 1));
+//            this.historyOfMessages.addOneSendedMessage(new Message(edit.getText().toString(), 1, messageEntity.user.username, new Date(), historyOfMessages.getHistoryOfMessagesList().size() + 1));
             edit.getText().clear();
 
             this.adapter.setParams(this, this.historyOfMessages.getHistoryOfMessagesList());

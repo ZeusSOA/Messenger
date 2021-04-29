@@ -86,7 +86,7 @@ public class DialogViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             String date = df.format(Calendar.getInstance().getTime());
 
             dateTV.setText(date);
-            authorTV.setText("anton");
+            authorTV.setText(messageModel.author);
         }
     }
 

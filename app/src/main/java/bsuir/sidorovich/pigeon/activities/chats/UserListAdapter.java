@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,18 +27,27 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     public static class UserListViewHolder extends RecyclerView.ViewHolder {
         private TextView username;
         private TextView id;
+        private ImageView chatCircle;
+        private ImageView chatIcon;
         public UserListViewHolder(@NonNull View itemView) {
             super(itemView);
             username = itemView.findViewById(R.id.username_text);
             id = itemView.findViewById(R.id.id_text);
+            chatCircle = itemView.findViewById(R.id.imageView);
+            chatIcon = itemView.findViewById(R.id.imageView2);
         }
 
         public TextView getUsername() {
             return username;
         }
-
         public TextView getId() {
             return id;
+        }
+        public ImageView getChatCircle() {
+            return chatCircle;
+        }
+        public ImageView getChatIcon() {
+            return chatIcon;
         }
     }
 
@@ -78,6 +88,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     public void onBindViewHolder(@NonNull UserListViewHolder holder, int position) {
         holder.getUsername().setText(users.get(position).getUsername());
         holder.getId().setText("@" + users.get(position).getId());
+        holder.getChatCircle().setImageResource(R.drawable.circle_user);
+        holder.getChatIcon().setImageResource(R.drawable.ic_user);
     }
 
     @Override

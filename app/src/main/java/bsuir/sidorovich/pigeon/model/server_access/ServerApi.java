@@ -80,41 +80,50 @@ public class ServerApi {
     public static ArrayList<GroupChat> groupChats = new ArrayList<>();
     public static ArrayList<Chat> chats = new ArrayList<>();
     public static ArrayList<User> users = new ArrayList<>();
-    public static int chatIdCounter = 1;
-    public static int userIdCounter = 1001;
+//    public static int chatIdCounter = 1;
+//    public static int userIdCounter = 1001;
 
     // в будущем этого метода НЕ БУДЕТ, так как в других методах будет прямое обращение к серверу
     public static void initialize() {
-        for (int i = 0; i < 6; i++) {
-            users.add(new User(
-                    "u_id_" + userIdCounter,
-                    "u_name_" + userIdCounter,
-                    "")
-            );
-            userIdCounter++;
-        }
-        for (int i = 0; i < 9; i++) {
-            if (i < 3) {
-                Chat chat = new SingleChat();
-                chat.setChatname(users.get(i).getUsername());
-                chat.setId("c_id_" + chatIdCounter);
-                chats.add(chat);
-            } else {
-                Chat chat = new GroupChat();
-                chat.setChatname("g_name_" + chatIdCounter);
-                chat.setId("c_id_" + chatIdCounter);
-                chats.add(chat);
-            }
-            chatIdCounter++;
-        }
-        for (int i = 0; i < 4; i++) {
-            GroupChat chat = new GroupChat();
-            chat.setChatname("g_name_" + chatIdCounter);
-            chat.setId("c_id_" + chatIdCounter);
-            chat.setMembersCount(10 + i);
-            groupChats.add(chat);
-            chatIdCounter++;
-        }
+        users.add(new User( "13", "George Sharp",""));
+        users.add(new User( "10", "Joseph Morris",""));
+        users.add(new User( "34", "Martin Perkins",""));
+        users.add(new User( "32", "George Howard",""));
+        users.add(new User( "38", "Simon Morris",""));
+        users.add(new User( "27", "Dominic Sharp",""));
+        users.add(new User( "22", "Joseph Kelley",""));
+        users.add(new User( "25", "Jeffry Morris",""));
+
+
+        Chat chat;
+
+        chat = new SingleChat();
+        chat.setChatname("Roger Harrison");
+        chat.setId("3");
+        chats.add(chat);
+
+        chat = new SingleChat();
+        chat.setChatname("Steven Paul");
+        chat.setId("5");
+        chats.add(chat);
+
+        chat = new SingleChat();
+        chat.setChatname("Steven Waters");
+        chat.setId("8");
+        chats.add(chat);
+
+        chat = new GroupChat();
+        chat.setChatname("BSUIR 2018");
+        chat.setId("156");
+        chats.add(chat);
+
+        GroupChat groupChat = new GroupChat();
+        groupChat.setChatname("House №54 Neighbors");
+        groupChat.setId("191");
+        groupChat.setMembersCount(3);
+        groupChats.add(groupChat);
+
+        //        Hackathon 2021, 112
     }
 
     //получить от сервера список чатов, в которых состоит пользователь
@@ -181,12 +190,11 @@ public class ServerApi {
         for (User user : users) {
             if (userId.equals(user.getId())) {
                 chat.setChatname(user.getUsername());
+                chat.setId(user.getId());
                 break;
             }
         }
-        chat.setId("c_id_" + chatIdCounter);
         chats.add(chat);
-        chatIdCounter++;
 
         return chat.getId();
     }
@@ -203,9 +211,8 @@ public class ServerApi {
 
         //временный код
         Chat chat = new GroupChat();
-        chat.setChatname("g_name_" + chatIdCounter + "_" + chatname);
-        chat.setId("c_id_" + chatIdCounter);
-        chatIdCounter++;
+        chat.setChatname(chatname);
+        chat.setId("198");
         chats.add(chat);
 
         return chat.getId();
