@@ -21,9 +21,12 @@ import java.util.ArrayList;
 import bsuir.sidorovich.pigeon.R;
 import bsuir.sidorovich.pigeon.model.server_access.ServerApi;
 import bsuir.sidorovich.pigeon.model.chat_hierarchy.Chat;
+import bsuir.sidorovich.pigeon.model.server_access.server_api.ChatServiceApi;
+import bsuir.sidorovich.pigeon.model.server_access.server_api.UserServiceApi;
 
 public class SearchChatFragment extends Fragment {
-    private ArrayList<Chat> chats = ServerApi.getChats();
+    private ArrayList<Chat> chats = new UserServiceApi().getChats();
+//    private ArrayList<Chat> chats = ServerApi.getChats();
     private ArrayList<Chat> foundChats = new ArrayList<>();
     private ChatListAdapter adapter;
 

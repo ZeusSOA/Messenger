@@ -16,4 +16,48 @@ public class MessageEntity {
 //    private LocalDateTime sendTime;
 
     private String text;
+
+//    public MessageEntity() {}
+
+    @Override
+    public String toString() {
+        return "\n\nMessageEntity{" +
+                "id=" + id +
+                ", chat=" + chat +
+                ", user=" + user +
+                ", text='" + text + '\'' +
+                '}';
+    }
+//
+//    public long getId() {
+//        return id;
+//    }
+//
+//    public void setId(long id) {
+//        this.id = id;
+//    }
+//
+//    public ChatEntity getChat() {
+//        return chat;
+//    }
+//
+//    public void setChat(ChatEntity chat) {
+//        this.chat = chat;
+//    }
+//
+//    public UserEntity getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(UserEntity user) {
+//        this.user = user;
+//    }
+//
+//    public String getText() {
+//        return text;
+//    }
+//
+//    public void setText(String text) {
+//        this.text = text;
+//    }
 }

@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import bsuir.sidorovich.pigeon.R;
 import bsuir.sidorovich.pigeon.model.server_access.ServerApi;
 import bsuir.sidorovich.pigeon.model.User;
+import bsuir.sidorovich.pigeon.model.server_access.server_api.ChatServiceApi;
+import bsuir.sidorovich.pigeon.model.server_access.server_api.UserServiceApi;
 
 public class AddUserFragment extends Fragment {
     private ArrayList<User> foundUsers = new ArrayList<>();
@@ -50,7 +52,12 @@ public class AddUserFragment extends Fragment {
                     return;
                 }
 
-                foundUsers.addAll(ServerApi.getUsersByText(textToSearch));
+                if (textToSearch.charAt(0) == '@') {
+                    textToSearch = textToSearch.substring(1);
+                    foundUsers.add(new UserServiceApi().getUserById(Long.parseLong(textToSearch)));
+                } else {
+                    foundUsers.addAll(new UserServiceApi().getUserByName(textToSearch));
+                }
 
                 if (foundUsers.size() == 0)
                     Toast.makeText(view.getContext(), "Чаты не найдены", Toast.LENGTH_LONG).show();

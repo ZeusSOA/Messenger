@@ -3,6 +3,7 @@ package bsuir.sidorovich.pigeon.activities.chats;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,7 +31,8 @@ import bsuir.sidorovich.pigeon.model.server_access.server_api.UserServiceApi;
 
 public class ChatsFragment extends Fragment {
     //при необходимости при запуске приложения метод getChats() будет загружать список не в ОЗУ, как сейчас, а в БД
-    private ArrayList<Chat> chats = ServerApi.getChats();
+    private ArrayList<Chat> chats = new UserServiceApi().getChats();
+    //    private ArrayList<Chat> chats = ServerApi.getChats();
     private ChatListAdapter adapter;
 
     @Override
@@ -47,7 +49,12 @@ public class ChatsFragment extends Fragment {
 //                Toast.makeText(getActivity(), UserServiceApi.test(), Toast.LENGTH_LONG).show();
 //                Toast.makeText(getActivity(), ChatServiceApi.test(), Toast.LENGTH_LONG).show();
 //                Toast.makeText(getActivity(), ChatServiceApi.testObject(), Toast.LENGTH_LONG).show();
-                Toast.makeText(getActivity(), ChatServiceApi.test_getChatById(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), ChatServiceApi.test_getChatById(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), new ChatServiceApi().test_createChat(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), new UserServiceApi().test_createUser(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), new UserServiceApi().getUserByName("est"), Toast.LENGTH_LONG).show();
+//                new ChatServiceApi().test_deleteChat();
+//                new ChatServiceApi().test_addUserById();
             }
         });
         ///
